@@ -43,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install cpplint
         run: pip install cpplint
@@ -68,11 +68,6 @@ jobs:
       - name: Run cppcheck
         run: |
           cppcheck --enable=all \
-            --suppress=missingIncludeSystem \
-            --suppress=unusedFunction:source/evaluator.cpp \
-            --suppress=unusedFunction:source/formula.cpp \
-            --suppress=unusedFunction:source/parser.cpp \
-            --suppress=unusedFunction:source/solver.cpp \
             -I./include \
             --error-exitcode=1 \
             source/ include/
