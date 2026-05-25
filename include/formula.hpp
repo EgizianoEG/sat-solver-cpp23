@@ -5,18 +5,22 @@
 #include <unordered_map>
 #include <vector>
 
+using std::string;
+using std::unordered_map;
+using std::vector;
+
 struct Literal {
-    std::string name;
+    string name;
     bool is_negated;
 };
 
-using Clause       = std::vector<Literal>;
-using Formula      = std::vector<Clause>;
-using Assignment   = std::unordered_map<std::string, bool>;
-using VariableList = std::vector<std::string>;
+using Clause       = vector<Literal>;
+using Formula      = vector<Clause>;
+using Assignment   = unordered_map<string, bool>;
+using VariableList = vector<string>;
 
 VariableList ExtractVariables(const Formula& formula);
-std::string LiteralToString(const Literal& literal);
-std::string FormulaToString(const Formula& formula);
+string LiteralToString(const Literal& literal);
+string FormulaToString(const Formula& formula);
 
 #endif  // FORMULA_HPP
