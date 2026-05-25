@@ -1,0 +1,28 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cpp,h,hpp,c,cc,cxx}]
+indent_style = space
+indent_size = 4
+max_line_length = 100
+
+[*.{js,ts,json}]
+charset = utf-8
+indent_size = 2
+indent_style = space
+max_line_length = 100
+
+[*.{css,scss,less}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+[*.{html,htm,xml}]
+indent_style = space
+indent_size = 2
+max_line_length = 100

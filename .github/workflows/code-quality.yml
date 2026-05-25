@@ -1,0 +1,87 @@
+name: Code Style & Quality Check
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format-22
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+            | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          sudo add-apt-repository \
+            "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-22 main"
+          sudo apt-get update
+          sudo apt-get install -y clang-format-22
+
+      - name: Check formatting
+        id: format
+        run: |
+          mapfile -t files < <(find source include \( -name "*.cpp" -o -name "*.hpp" \))
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No C++ files found. Skipping."
+            exit 0
+          fi
+          clang-format-22 --dry-run --Werror "${files[@]}"
+
+  cpplint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install cpplint
+        run: pip install cpplint
+
+      - name: Run cpplint
+        run: cpplint --recursive source/ include/
+
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+            | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          sudo add-apt-repository \
+            "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-22 main"
+          sudo apt-get update
+          sudo apt-get install -y cppcheck clang-tidy-22
+
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=all \
+            --suppress=missingIncludeSystem \
+            --suppress=unusedFunction:source/evaluator.cpp \
+            --suppress=unusedFunction:source/formula.cpp \
+            --suppress=unusedFunction:source/parser.cpp \
+            --suppress=unusedFunction:source/solver.cpp \
+            -I./include \
+            --error-exitcode=1 \
+            source/ include/
+
+      - name: Run clang-tidy
+        run: |
+          find source -name "*.cpp" | \
+            xargs -r clang-tidy-22 \
+              --header-filter="source/.*|include/.*" \
+              --extra-arg=-std=c++23 \
+              --extra-arg=-Iinclude \
+              --checks="-bugprone-easily-swappable-parameters"
