@@ -1,8 +1,9 @@
-#include "solver.hpp"
-#include "evaluator.hpp"
-
 #include <format>
 #include <stdexcept>
+#include <utility>
+
+#include "evaluator.hpp"
+#include "solver.hpp"
 
 SolverResult BruteForceSolver::solve(const Formula& formula, const VariableList& variables) {
     const std::size_t VAR_COUNT = variables.size();

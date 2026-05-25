@@ -1,5 +1,5 @@
-#ifndef EVALUATOR_HPP
-#define EVALUATOR_HPP
+#ifndef INCLUDE_EVALUATOR_HPP_
+#define INCLUDE_EVALUATOR_HPP_
 
 #include "formula.hpp"
 
@@ -40,4 +40,4 @@ bool EvaluateClause(const Clause& clause, const Assignment& assignment);
  */
 bool EvaluateFormula(const Formula& formula, const Assignment& assignment);
 
-#endif  // EVALUATOR_HPP
+#endif  // INCLUDE_EVALUATOR_HPP_

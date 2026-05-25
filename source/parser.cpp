@@ -1,9 +1,11 @@
 #include "parser.hpp"
+
 #include <algorithm>
 #include <iostream>
 #include <istream>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 
 Parser::Parser(std::istream& input) : input_(&input) {}
 
@@ -77,6 +79,6 @@ Formula Parser::parse() {
     return formula;
 }
 
-VariableList Parser::variables() const {
+const VariableList& Parser::variables() const {
     return variables_;
 }

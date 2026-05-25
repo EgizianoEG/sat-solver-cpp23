@@ -1,8 +1,7 @@
-#ifndef SOLVER_HPP
-#define SOLVER_HPP
+#ifndef INCLUDE_SOLVER_HPP_
+#define INCLUDE_SOLVER_HPP_
 
 #include <cstdint>
-
 #include "formula.hpp"
 
 /**
@@ -44,4 +43,4 @@ class BruteForceSolver {
     static SolverResult solve(const Formula& formula, const VariableList& variables);
 };
 
-#endif  // SOLVER_HPP
+#endif  // INCLUDE_SOLVER_HPP_

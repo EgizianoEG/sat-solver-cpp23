@@ -1,9 +1,9 @@
+#include <iostream>
+#include <string_view>
+
 #include "formula.hpp"
 #include "parser.hpp"
 #include "solver.hpp"
-
-#include <iostream>
-#include <string_view>
 
 namespace {
 
@@ -91,35 +91,33 @@ namespace {
 
 }  // namespace
 
-int main() {
-    PrintBanner();
-    PrintInstructions();
-
-    Parser parser(std::cin);
-    Formula formula;
-
+int main() {  // NOLINT(bugprone-exception-escape)
     try {
-        formula = parser.parse();
-    } catch (const std::invalid_argument& err) {
-        std::cerr << "\n[Error] " << err.what() << "\n";
-        return 1;
-    }
+        PrintBanner();
+        PrintInstructions();
 
-    const VariableList VARIABLES = parser.variables();
+        Parser parser(std::cin);
+        Formula formula;
+        formula                      = parser.parse();
 
-    PrintFormulaSection(formula, VARIABLES);
+        const VariableList VARIABLES = parser.variables();
+        PrintFormulaSection(formula, VARIABLES);
 
-    SolverResult result;
-
-    try {
+        SolverResult result;
         result = BruteForceSolver::solve(formula, VARIABLES);
+
+        PrintBruteForceResult(result);
+        PrintAssignment(result, VARIABLES);
+
+        return 0;
     } catch (const std::invalid_argument& err) {
         std::cerr << "\n[Error] " << err.what() << "\n";
         return 1;
+    } catch (const std::exception& err) {
+        std::cerr << "\n[Error] " << err.what() << "\n";
+        return 1;
+    } catch (...) {
+        std::cerr << "\n[Error] Unexpected exception.\n";
+        return 1;
     }
-
-    PrintBruteForceResult(result);
-    PrintAssignment(result, VARIABLES);
-
-    return 0;
 }

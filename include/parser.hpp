@@ -1,5 +1,5 @@
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef INCLUDE_PARSER_HPP_
+#define INCLUDE_PARSER_HPP_
 
 #include <istream>
 #include "formula.hpp"
@@ -47,11 +47,11 @@ class Parser {
      *
      * @return VariableList in first-appearance order.
      */
-    VariableList variables() const;
+    const VariableList& variables() const;
 
    private:
     std::istream* input_;     ///< Pointer to the bound input stream.
     VariableList variables_;  ///< Unique variable names accumulated during parse().
 };
 
-#endif  // PARSER_HPP
+#endif  // INCLUDE_PARSER_HPP_

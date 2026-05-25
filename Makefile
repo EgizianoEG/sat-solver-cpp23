@@ -141,7 +141,9 @@ lint:
 	         --inconclusive                  \
 	         --std=c++23                     \
 	         --language=c++                  \
+	         --suppress=checkersReport       \
 	         --suppress=missingIncludeSystem \
+	         --suppress=normalCheckLevelMaxBranches \
 	         --suppress=unusedFunction       \
 	         --error-exitcode=1              \
 	         -Iinclude --inline-suppr        \
