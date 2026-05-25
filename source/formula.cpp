@@ -19,6 +19,11 @@ string LiteralToString(const Literal& literal) {
     return literal.is_negated ? ("¬" + literal.name) : literal.name;
 }
 
+/**
+ * @brief Formats a single clause as a disjunction string, e.g. "P ∨ ¬Q ∨ R".
+ * @param clause The clause to format.
+ * @return The formatted disjunction string (without surrounding parentheses).
+ */
 string ClauseToString(const Clause& clause) {
     string result;
 
@@ -26,7 +31,6 @@ string ClauseToString(const Clause& clause) {
         if (i > 0) {
             result += " ∨ ";
         }
-
         result += LiteralToString(clause[i]);
     }
 
@@ -40,7 +44,6 @@ string FormulaToString(const Formula& formula) {
         if (i > 0) {
             result += " ∧ ";
         }
-
         result += "(";
         result += ClauseToString(formula[i]);
         result += ")";
