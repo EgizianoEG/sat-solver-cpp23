@@ -14,7 +14,7 @@ namespace {
     void PrintBanner() {
         std::cout << "\n"
                   << BANNER_LINE << "\n"
-                  << "  SAT Solver \x{e2}\x{80}\x{94} Discrete Mathematics Project\n"
+                  << "  SAT Solver - Discrete Mathematics Project\n"
                   << BANNER_LINE << "\n\n";
     }
 
