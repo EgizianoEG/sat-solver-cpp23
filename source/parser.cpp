@@ -11,7 +11,6 @@ Parser::Parser(std::istream& input) : input_(&input) {}
 
 Formula Parser::parse() {
     Formula formula;
-    variables_.clear();
 
     int clause_num = 1;
     std::string line;
@@ -64,10 +63,6 @@ Formula Parser::parse() {
             }
 
             clause.push_back(lit);
-
-            if (!std::ranges::contains(variables_, lit.name)) {
-                variables_.push_back(lit.name);
-            }
         }
 
         if (!clause.empty()) {
@@ -76,6 +71,7 @@ Formula Parser::parse() {
         }
     }
 
+    variables_ = ExtractVariables(formula);
     return formula;
 }
 
