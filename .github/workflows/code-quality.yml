@@ -68,6 +68,7 @@ jobs:
       - name: Run cppcheck
         run: |
           cppcheck --enable=all \
+            --suppress=missingIncludeSystem \
             -I./include \
             --error-exitcode=1 \
             source/ include/
